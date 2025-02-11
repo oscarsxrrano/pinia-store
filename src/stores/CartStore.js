@@ -1,5 +1,5 @@
 import { groupBy } from "lodash";
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { useAuthUserStore } from "./AuthUserStore";
 
 export const useCartStore = defineStore("CartStore", {
@@ -42,3 +42,7 @@ export const useCartStore = defineStore("CartStore", {
     totalPrice: (state) => state.items.reduce((total, item) => total + item.price, 0),
   }
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot));
+}
